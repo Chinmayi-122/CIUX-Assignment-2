@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Voice Birthday Assistant — V5</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="page">
+    <header class="academic-header">
+      <div>
+        <div class="eyebrow">GM University · School of Computer Science and Technology</div>
+        <h1>Birthday Assistant <span>V5</span></h1>
+        <p class="subtitle">UE24CS3540 — Conversational Interfaces and UX · Voice Conversational Interface</p>
+      </div>
+      <div class="badge">{{ record_count }} synthetic people</div>
+    </header>
+
+    <section class="learning-strip">
+      <strong>Learning focus:</strong> speak or type → the same grounded V4 conversation → visible text response.
+      <span>Voice is a channel, not a new source of facts.</span>
+    </section>
+
+    <div class="layout">
+      <section class="chat-card">
+        <div id="chat" class="chat" aria-live="polite"></div>
+
+        <div class="chips" aria-label="Example questions">
+          <button class="chip" data-q="Show upcoming birthdays.">Upcoming birthdays</button>
+          <button class="chip" data-q="How many birthdays are there next month?">Count next month</button>
+          <button class="chip" data-q="Is there any birthday tomorrow?">Tomorrow</button>
+          <button class="chip" data-q="When is Rahul Patil's birthday?">Rahul's birthday</button>
+          <button class="chip" data-q="Count nephew birthdays in September.">Nephews in September</button>
+          <button class="chip" data-q="Where does Rahul Patil stay?">Rahul's location</button>
+        </div>
+
+        <form id="chat-form" class="composer">
+          <input id="question" autocomplete="off" placeholder="Ask a birthday question…" aria-label="Question">
+          <button type="submit" class="send">Send</button>
+          <button type="button" id="voice-button" class="voice-button" aria-pressed="false" aria-describedby="voice-status">Speak</button>
+        </form>
+        <div class="voice-options">
+          <label class="speak-back"><input type="checkbox" id="speakBack"> Read responses aloud</label>
+          <div id="voice-status" class="voice-status" role="status" aria-live="polite">Type a question or select Speak to use your microphone.</div>
+        </div>
+        <div class="chat-actions">
+          <div class="hint">Voice transcripts and replies stay visible. Check the debug panels to distinguish speech recognition errors from NLU errors.</div>
+          <button type="button" id="reset-conversation" class="reset">Reset Conversation</button>
+        </div>
+      </section>
+
+      <aside class="debug-card">
+        <h2>NLU Debug</h2>
+        <p>This panel shows how the recognized or typed text was interpreted. Check the transcript above before diagnosing an NLU error.</p>
+        <pre id="trace">No query yet.</pre>
+        <h2>Dialogue State</h2>
+        <p>Remembered context for this conversation.</p>
+        <pre id="dialogue-state">No saved context.</pre>
+        <div class="concept-box">
+          <strong>Observe:</strong>
+          <ul>
+            <li>Did speech recognition capture the words correctly?</li>
+            <li>Which intent was selected?</li>
+            <li>Which entities were extracted?</li>
+            <li>Which month and relationship are remembered from context?</li>
+            <li>Does typing still work when speech output is off?</li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+
+    <footer>Teaching project · Synthetic data only · Faculty: Dr. Shivanagowda G. M. &amp; Tejas</footer>
+  </main>
+  <script>window.initialDialogueState = {{ dialogue_state|tojson }};</script>
+  <script src="{{ url_for('static', filename='chat.js') }}"></script>
+</body>
+</html>
